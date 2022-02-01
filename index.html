@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400&family=Merriweather:wght@700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+
+    <!-- <link rel="stylesheet" href="./assets/css/jass.css" /> -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+
+<body>
+    <!-- div for the whole container -->
+    <header id="header" class="jumbotron jumbotron-fluid text-container">
+        <h1 id="header-text" class="display-2">Weather Dashboard</h1>
+    </header>
+
+    <div id="wholePage" class="container">
+        <div class="row">
+            <aside id="searchContainer">
+                <form id="userCity">
+                    <div class="formRow">
+                        <input id="enterCity" class="form-control" name="city" value=""
+                            placeholder="Enter City"></input>
+                        <button id="searchBtn" class="btn btn-primary" type="submit"><i
+                                class="fas fa-search"></i></button>
+                    </div>
+                    <div id="searchHistoryList">
+                        <!-- Make a list to format, then learn how to add an item onto the list for every new search. 
+                            save in local storage? -->
+                    </div>
+                </form>
+
+            </aside>
+            <section id="allWeatherCards">
+                <section id="currentWeatherCard">
+                    <div class="row">
+                        <div class="weatherContainer">
+                            <p class="cityName"></p>
+                            <img class="icon">
+                            <p class="cityWeather"></p>
+                            <p class="cityDate"></p>
+                            <p class="cityTemp"></p>
+                            <p class="cityWind"></p>
+                            <p class="cityHumidity"></p>
+                            <p class="cityUVIndex"></p>
+                        </div>
+                    </div>
+                </section>
+                <section id="fiveDayCards"> 5 Day Forecast
+                    <div class="row">
+                        <p class="cityDate">Date:</p>
+                        <p class="cityTemp">Temp:</p>
+                        <p class="cityWind">Wind:</p>
+                        <p class="cityHumidity">Humidity:</p>
+                    </div>
+                </section>
+            </section>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script> 
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>

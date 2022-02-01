@@ -1,0 +1,13 @@
+
+body {
+    background-color: #d9dcd6;
+}
+
+#fiveDayCards {
+    border: solid black 1px;
+}
+
+.weatherContainer {
+    background: teal;
+    text-align: center;
+}
