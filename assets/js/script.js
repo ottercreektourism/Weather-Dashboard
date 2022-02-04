@@ -23,7 +23,7 @@ function getWeather(event){
 // let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + selectedCity + "&units=imperial&APPID=" + apiKey;
 
 
-// Function to retrieve data from the API and display it to the page
+// Function to retrieve data from the API and display it to the page. Successful method.
 $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + enterCity + "&units=imperial&APPID=" + apiKey, function(data){
     // console.log(data);
     var icon = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
@@ -41,10 +41,23 @@ $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + enterCity + "&u
 
 });
 
+
+// Trying to figure out how to call the function using fetch instead of the $.getJSON method since we're learning about fetch in class
+function oneCallURL(lat, lon){
+var oneCallURL = "https://api.openweathermap.org/data/2.5/weather?q=" + enterCity + "&units=imperial&APPID=" + apiKey;
+fetch(oneCallURL)
+    .then(function (res){
+        return res.json()
+    })
+    .then(function (data){
+        temp.textContent = data.current.temp
+    })
+}
+
 // Function to add event listener to click button
-// trying to see if the keys work to troubleshoot for the .onclick function not working
-enterCity.addeventlistener('keyup', (e)=>{
-    const searchString = e.target.value.toLowerCase();
+// trying to see if the keys work to troubleshoot for the .onclick function not working. will change to click event listener.
+enterCity.addeventlistener('keyup', (event)=>{
+    const searchString = event.target.value.toLowerCase();
     const filteredResults = allCities.filter((city)=>{
         city.name.toLowerCase().includes(searchString);
 
@@ -52,12 +65,11 @@ enterCity.addeventlistener('keyup', (e)=>{
 })
 
 
-// console.log(searchBtn);
 // Function to display current conditions for selected City
+// trying new method here, same function as above.
 $("enterCity").keyup(function(event){
     console.log(event.target.value);
     event.preventDefault();
-    alert("The paragraph was clicked."); // example from another source, trying to make it work
     var enterCity = $('enterCity').val();
     console.log(enterCity);
 
@@ -69,13 +81,13 @@ $("enterCity").keyup(function(event){
 // console.log(enterCity);
 
 
-// Function to make the submit button clickable
-const fetchLocation = () => {
-    if(enterCity !== ""){
-        queryURL = "";
-        console.log(queryURL);
-    }
-}
+// Function to make the submit button clickable.
+// const fetchLocation = () => {
+//     if(enterCity !== ""){
+//         queryURL = "";
+//         console.log(queryURL);
+//     }
+// }
 
 // searchLocation function is for calling the city entered from the API, and handling if the entered city is invalid
 const searchLocation = (event) =>{
@@ -93,6 +105,7 @@ const searchLocation = (event) =>{
 }
 $('#searchBtn').on('submit', searchLocation);
 
+// Peter and I working on function to display weather, but not using it because I havent adjusted the rest of the code to make it fit.
 
 // function displayWeather(data) {
 //     for (var i = 1; i < 6; i++) {
