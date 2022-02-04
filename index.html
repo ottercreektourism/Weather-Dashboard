@@ -18,8 +18,74 @@
 </head>
 
 <body>
-    <!-- div for the whole container -->
+    <!-- Header says "Weather Dashboard" -->
     <header id="header" class="jumbotron jumbotron-fluid text-container">
+        <h1 id="header-text" class="display-2">Weather Dashboard</h1>
+    </header>
+
+    <!-- section for the search button and the search history that will be saved to the local storage -->
+    <section id="container">
+        <div id="search"></div>
+        <li>
+            <h2>Enter City:</h2>
+        </li>
+        <li>
+            <input type="text" id="enterCity" placeholder="London">
+        </li>
+        <li>
+            <!-- <button onclick="search()" id="searchBtn">Search</button> -->
+            <button onclick="search()" id="searchBtn" id="searchBtn" class="btn btn-primary" type="button"><i
+                class="fas fa-search"></i></button>
+        </li>
+        <hr />
+        <div id="pastSearches"></div>
+    </section>
+
+    <!-- section for the current weather card -->
+    <section id="statistics">
+        <div id="cityStats">
+            <p class="cityName lead"></p>
+            <p id="currentDay" class="lead">loading date...</p>
+            <img class="icon lead">
+            <p class="cityWeather lead"></p>
+            <p class="cityDate lead"></p>
+            <p class="cityTemp lead"></p>
+            <p class="cityWind lead"></p>
+            <p class="cityHumidity lead"></p>
+            <p class="cityUVIndex lead"></p>
+        </div>
+    </section>
+
+    <!-- section for the 5 day forecast cards -->
+    <section>
+        <h3>5 Day Forecast:</h3>
+        <div id="fiveDayForecast" class="fiveDayForecast">
+            <!-- Day 1 -->
+            <div id="day1" class="forecast">
+            </div>
+            <div id="day2" class="forecast">
+            </div>
+            <div id="day3" class="forecast">
+            </div>
+            <div id="day4" class="forecast">
+            </div>
+            <div id="day5" class="forecast">
+            </div>
+        </div>
+    </section>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>
+    
+    <!-- div for the whole container -->
+    <!-- <header id="header" class="jumbotron jumbotron-fluid text-container">
         <h1 id="header-text" class="display-2">Weather Dashboard</h1>
     </header>
 
@@ -27,25 +93,25 @@
         <div class="row">
             <aside id="searchContainer">
                 <form id="userCity">
-                    <div class="formRow">
-                        <!-- search city form -->
-                        <input id="enterCity" class="form-control" name="city" value=""
+                    <div class="formRow"> -->
+    <!-- search city form -->
+    <!-- <input id="enterCity" class="form-control" name="city" value=""
                             placeholder="Enter City"></input>
                         <button id="searchBtn" class="btn btn-primary" type="button"><i
                                 class="fas fa-search"></i></button>
                     </div>
                     <div id="searchHistoryList">
-                        <!-- Make a list to format, then learn how to add an item onto the list for every new search. 
+                        Make a list to format, then learn how to add an item onto the list for every new search. 
                             save in local storage? -->
-                    </div>
-                </form>
+    <!-- </div>
+                </form> -->
 
-            </aside>
+    <!-- </aside>
             <section id="allWeatherCards">
                 <section id="currentWeatherCard">
-                    <div class="row">
-                        <!-- Weather conditions for the current moment -->
-                        <div class="weatherContainer">
+                    <div class="row"> -->
+    <!-- Weather conditions for the current moment -->
+    <!-- <div class="weatherContainer">
                             <p class="cityName"></p>
                             <img class="icon">
                             <p class="cityWeather"></p>
@@ -54,30 +120,20 @@
                             <p class="cityWind"></p>
                             <p class="cityHumidity"></p>
                             <p class="cityUVIndex"></p>
-                        </div>
-                    </div>
+                        </div> -->
+    <!-- </div>
                 </section>
-                <section id="fiveDayCards"> 5 Day Forecast
-                    <!-- weather conditions for the next 5 days -->
-                    <!-- <div class="row">
+                <section id="fiveDayCards"> 5 Day Forecast -->
+    <!-- weather conditions for the next 5 days -->
+    <!-- <div class="row">
                         <p class="cityDate">Date:</p>
                         <p class="cityTemp">Temp:</p>
                         <p class="cityWind">Wind:</p>
                         <p class="cityHumidity">Humidity:</p>
                     </div> -->
-                </section>
+    <!-- </section>
             </section>
 
         </div>
 
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script> 
-    <script src="./assets/js/script.js"></script>
-</body>
-
-</html>
+    </div> -->

@@ -1,13 +1,61 @@
-
 body {
-    background-color: #d9dcd6;
-}
-
-#fiveDayCards {
-    border: solid black 1px;
-}
-
-.weatherContainer {
-    background: teal;
     text-align: center;
-}
+  }
+
+  /* h1 {
+    color:white;
+    background: purple;
+    padding-bottom: 10px;
+  } */
+
+  li {
+    list-style-type: none;
+    padding: 0.25rem;
+  }
+
+  button { width: 15rem; }
+  input { width: 14rem; }
+  h2, h3 { margin: auto; }
+  #container { display: flex; }
+
+  /* #search {
+    width: 33%;
+    margin: 1em;
+  } */
+
+  #statistics { 
+    width: 66%;
+    text-align: left; 
+  }
+  #cityStats {
+    margin: 1rem;
+    padding: 1rem;
+    border-style: solid;
+  }
+
+  /* #searchBtn {
+    background: blueviolet;
+    color:white;
+  } */
+
+  #fiveDayForecast {
+   display: flex; 
+  }
+
+  .forecast {
+    display: inline;
+    background: grey;
+    color: white;
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  #uvindex {
+    color: white;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+  }
+
+  .favorable { background: green; }
+  .moderate { background: yellow; }
+  .severe { background: red; }
