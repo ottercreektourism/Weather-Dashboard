@@ -1,10 +1,10 @@
 // API information
 const apiKey = "1d0e728c8ec9d18a5f99aaa0096cbec3";
 var geocoder = "http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit={limit}&appid={API key}"
-// var enterCity = $('enterCity');
+var enterCity = $('enterCity');
 // hard code the city for testing. will change later
 // var searchBtn = $('searchBtn');
-var enterCity = "Boston"
+// var enterCity = "Boston"
 var cityName = $('.cityName');
 // var enterCity = $('.cityName')
 var cityDate = $('.cityDate');
@@ -24,6 +24,7 @@ var dateTrackerElement = $('#currentDay');
 // Function to retrieve data from the API and display it to the page. Successful method.
 $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + enterCity + "&units=imperial&APPID=" + apiKey, function (data) {
     // console.log(data);
+    var enterCity = enterCity.val()
     var icon = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
     var temp = Math.floor(data.main.temp);
     var weather = data.weather[0].main;
@@ -37,7 +38,6 @@ $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + enterCity + "&u
     $('.cityTemp').append("Temperature: " + temp + " °F");
     $('.cityWind').append("Wind Speed: " + windSpeed + " MPH");
     $('.cityHumidity').append("Humidity: " + humidity + "%");
-    
 
 });
 
@@ -46,10 +46,20 @@ function timeTracker() {
     var currentDay = moment().format("MMM DD, YYYY [at] hh:mm:ss a");
     dateTrackerElement.text(currentDay);
 }
-// Setting timer interval
+// Setting time interval
 setInterval(timeTracker, 1000);
 
 
+// Conditional statements for the UVIndex color coding ]
+
+
+// Function for reverse geocode to use lat + lon to get the uv index
+
+
+// Function to cycle through each of the days in the 5 day forecast
+function get5Day(){
+    forecast.innerHTML = "";
+};
 
 
 
