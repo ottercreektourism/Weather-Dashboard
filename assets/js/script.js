@@ -1,11 +1,13 @@
 // API information
 const apiKey = "1d0e728c8ec9d18a5f99aaa0096cbec3";
 var geocoder = "http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit={limit}&appid={API key}"
-var enterCity = $('enterCity');
+// var enterCity = $('enterCity');
 // hard code the city for testing. will change later
 // var searchBtn = $('searchBtn');
-// var enterCity = "Boston"
-var cityName = $('.cityName');
+var enterCity = "Boston"
+var userCity = $('#enterCity');
+var searchBtn = $('#searchBtn');
+// var cityName = $('.cityName');
 // var enterCity = $('.cityName')
 var cityDate = $('.cityDate');
 var icon = $('.icon');
@@ -14,17 +16,17 @@ var cityTemp = $('.cityTemp');
 var cityWind = $('.cityWind');
 var cityHumidity = $('.cityHumidity');
 var cityUVIndex = $('.cityUVIndex');
-var fiveDayForecast = $('fiveDayForecast');
+var fiveDayForecast = $('#fiveDayForecast');
 var dateTrackerElement = $('#currentDay');
+// https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
 
 // Function to make the search button search for a city to call from the API
+searchBtn.on("click", function(){
 
-
-
-// Function to retrieve data from the API and display it to the page. Successful method.
-$.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + enterCity + "&units=imperial&APPID=" + apiKey, function (data) {
-    // console.log(data);
-    var enterCity = enterCity.val()
+    // Function to retrieve data from the API and display it to the page. Successful method.
+$.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + userCity.val() + "&units=imperial&APPID=" + apiKey, function (data) {
+    console.log(data);
+    
     var icon = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
     var temp = Math.floor(data.main.temp);
     var weather = data.weather[0].main;
@@ -32,12 +34,17 @@ $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + enterCity + "&u
     var humidity = data.main.humidity;
     // var UVIndex = data. //use the lat and lon to find the UVIndex
 
-    $('.cityName').append(enterCity);
+    $('.cityName').text(userCity.val());
     $('.icon').attr('src', icon);
-    $('.cityWeather').append(weather);
-    $('.cityTemp').append("Temperature: " + temp + " °F");
-    $('.cityWind').append("Wind Speed: " + windSpeed + " MPH");
-    $('.cityHumidity').append("Humidity: " + humidity + "%");
+    $('.cityWeather').text(weather);
+    $('.cityTemp').text("Temperature: " + temp + " °F");
+    $('.cityWind').text("Wind Speed: " + windSpeed + " MPH");
+    $('.cityHumidity').text("Humidity: " + humidity + "%");
+    
+    var latitude = data.coord.lat;
+    var longitude = data.coord.lon;
+    get5Day(latitude, longitude, userCity)
+});
 
 });
 
@@ -57,8 +64,22 @@ setInterval(timeTracker, 1000);
 
 
 // Function to cycle through each of the days in the 5 day forecast
-function get5Day(){
-    forecast.innerHTML = "";
+function get5Day(latitude, longitude){
+    // fiveDayForecast.innerHTML = "";
+    var call = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&exclude=" + "current,minutely,hourly,alerts" + "&units=imperial&appid=" + apiKey
+    $.getJSON(call, function(data){
+        for (let index = 0; index < 5; index++) {
+            var newDivs = $('<div class="weatherCards"></div>')
+            var name = $('<h3 class="name"></h3>').text
+            var temp = $('<h3 class="temp"></h3>').text(data.daily[i].temp.day);
+            var wind = $('<h3 class="wind"></h3>')
+            var forecast = $('<h3 class="forecast"></h3>')
+            var humidity = $('<h3 class="humidity"></h3>')
+            var uvi = $('<h3 class="uvi"></h3>')
+            
+        }
+        console.log(data)
+    })
 };
 
 
@@ -110,13 +131,13 @@ function oneCallURL(lat, lon) {
 
 // Function to add event listener to click button
 // trying to see if the keys work to troubleshoot for the .onclick function not working. will change to click event listener.
-enterCity.addeventlistener('keyup', (event) => {
-    const searchString = event.target.value.toLowerCase();
-    const filteredResults = allCities.filter((city) => {
-        city.name.toLowerCase().includes(searchString);
+// enterCity.addEventListener('keyup', (event) => {
+//     const searchString = event.target.value.toLowerCase();
+//     const filteredResults = allCities.filter((city) => {
+//         city.name.toLowerCase().includes(searchString);
 
-    })
-})
+//     })
+// })
 
 
 // Function to display current conditions for selected City
@@ -133,7 +154,7 @@ let allCities = [
         name: 'New York'
     }
 ]
-$("#enterCity").keyup(function (event) {
+$("#enterCity").click(function (event) {
 
     const searchString = event.target.value.toLowerCase();
     const filteredResults = allCities.filter((city) => {
@@ -156,6 +177,10 @@ $("#enterCity").keyup(function (event) {
 
 
 
+
+
+
+
 // var enterCity = enterCity.val();
 // console.log(enterCity);
 
@@ -170,8 +195,7 @@ $("#enterCity").keyup(function (event) {
 
 // searchLocation function is for calling the city entered from the API, and handling if the entered city is invalid
 const searchLocation = (event) => {
-    event.preventDefault();
-    var enterCity = $("#enterCity").val;
+    var enterCity = $("#enterCity").val();
     enterCity = enterCity.trim();
 
     if (!enterCity) {
