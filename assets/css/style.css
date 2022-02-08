@@ -2,12 +2,6 @@ body {
     text-align: center;
   }
 
-  /* h1 {
-    color:white;
-    background: purple;
-    padding-bottom: 10px;
-  } */
-
   li {
     list-style-type: none;
     padding: 0.25rem;
@@ -18,25 +12,17 @@ body {
   h2, h3 { margin: auto; }
   #container { display: flex; }
 
-  /* #search {
-    width: 33%;
-    margin: 1em;
-  } */
 
   #statistics { 
     width: 66%;
     text-align: left; 
   }
+  
   #cityStats {
     margin: 1rem;
     padding: 1rem;
     border-style: solid;
   }
-
-  /* #searchBtn {
-    background: blueviolet;
-    color:white;
-  } */
 
   #fiveDayForecast {
    display: flex; 

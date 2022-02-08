@@ -23,3 +23,4 @@ How to use:
 Screenshots of the working site are provided here:
 
 Here is the link to the deployed site:
+https://ottercreektourism.github.io/Weather-Dashboard/

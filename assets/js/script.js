@@ -21,30 +21,30 @@ var dateTrackerElement = $('#currentDay');
 // https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
 
 // Function to make the search button search for a city to call from the API
-searchBtn.on("click", function(){
+searchBtn.on("click", function () {
 
     // Function to retrieve data from the API and display it to the page. Successful method.
-$.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + userCity.val() + "&units=imperial&APPID=" + apiKey, function (data) {
-    console.log(data);
-    
-    var icon = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-    var temp = Math.floor(data.main.temp);
-    var weather = data.weather[0].main;
-    var windSpeed = Math.floor(data.wind.speed);
-    var humidity = data.main.humidity;
-    // var UVIndex = data. //use the lat and lon to find the UVIndex
+    $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + userCity.val() + "&units=imperial&APPID=" + apiKey, function (data) {
+        console.log(data);
 
-    $('.cityName').text(userCity.val());
-    $('.icon').attr('src', icon);
-    $('.cityWeather').text(weather);
-    $('.cityTemp').text("Temperature: " + temp + " °F");
-    $('.cityWind').text("Wind Speed: " + windSpeed + " MPH");
-    $('.cityHumidity').text("Humidity: " + humidity + "%");
-    
-    var latitude = data.coord.lat;
-    var longitude = data.coord.lon;
-    get5Day(latitude, longitude, userCity)
-});
+        var icon = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+        var temp = Math.floor(data.main.temp);
+        var weather = data.weather[0].main;
+        var windSpeed = Math.floor(data.wind.speed);
+        var humidity = data.main.humidity;
+        // var UVIndex = data. //use the lat and lon to find the UVIndex
+
+        $('.cityName').text(userCity.val());
+        $('.icon').attr('src', icon);
+        $('.cityWeather').text(weather);
+        $('.cityTemp').text("Temperature: " + temp + " °F");
+        $('.cityWind').text("Wind Speed: " + windSpeed + " MPH");
+        $('.cityHumidity').text("Humidity: " + humidity + "%");
+
+        var latitude = data.coord.lat;
+        var longitude = data.coord.lon;
+        get5Day(latitude, longitude, userCity)
+    });
 
 });
 
@@ -57,58 +57,65 @@ function timeTracker() {
 setInterval(timeTracker, 1000);
 
 
-// Conditional statements for the UVIndex color coding ]
+// Conditional statements for the UVIndex color coding
+while (cityUVIndex.classList.length > 0) {
+    cityUVIndex.classList.remove(cityUVIndex.classList.item(0));
+
+    if (data.current.uvi > 5) {
+        cityUVIndex.classList.add("severe");
+    } else if (data.current.uvi > 3) {
+        cityUVIndex.classList.add("moderate");
+    } else {
+        cityUVIndex.classList.add("favorable");
+    }
+}
 
 
 // Function for reverse geocode to use lat + lon to get the uv index
 
 
 // Function to cycle through each of the days in the 5 day forecast
-function get5Day(latitude, longitude){
+function get5Day(latitude, longitude) {
     // fiveDayForecast.innerHTML = "";
     var call = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&exclude=" + "current,minutely,hourly,alerts" + "&units=imperial&appid=" + apiKey
-    $.getJSON(call, function(data){
+    $.getJSON(call, function (data) {
         for (let index = 0; index < 5; index++) {
             var newDivs = $('<div class="weatherCards"></div>')
-            var name = $('<h3 class="name"></h3>').text
+            var name = $('<h3 class="name"></h3>') //.text 
             var temp = $('<h3 class="temp"></h3>').text(data.daily[i].temp.day);
             var wind = $('<h3 class="wind"></h3>')
             var forecast = $('<h3 class="forecast"></h3>')
             var humidity = $('<h3 class="humidity"></h3>')
             var uvi = $('<h3 class="uvi"></h3>')
-            
+
         }
         console.log(data)
     })
 };
 
 
+// Function to append the searched cities to the search bar on the left
+// Still need the setItem part
+
+function getHistory() {
+    var history = localStorage.getItem("citySave");
+    searchHistory = JSON.parse(history) || [];
+    oldSearch.empty();
+    searchHistory.forEach(element => {
+        var newBtn = $('<button>');
+        newBtn.text(element.name);
+        newBtn.addClass("historyButton");
+        oldSearch.append(newBtn);
+    });
+}
+
+getHistory();
+$(document).on('click', '.historyButton', function (e) {
+    citySearch(e.target.textContent);
+})
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var userCityCurrent = ""
-// var userCityArray = []
-
-// function getWeather(event) {
-//     event.preventDefault();
-    // var selectedCity = $('enterCity');
 
 
 // let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + selectedCity + "&units=imperial&APPID=" + apiKey;
@@ -129,19 +136,6 @@ function oneCallURL(lat, lon) {
         })
 }
 
-// Function to add event listener to click button
-// trying to see if the keys work to troubleshoot for the .onclick function not working. will change to click event listener.
-// enterCity.addEventListener('keyup', (event) => {
-//     const searchString = event.target.value.toLowerCase();
-//     const filteredResults = allCities.filter((city) => {
-//         city.name.toLowerCase().includes(searchString);
-
-//     })
-// })
-
-
-// Function to display current conditions for selected City
-// trying new method here, same function as above.
 
 let allCities = [
     {
@@ -166,15 +160,8 @@ $("#enterCity").click(function (event) {
     var enterCity = $('#enterCity').val();
     console.log(enterCity);
 
-    // var city = enterCity.val;
-    // console.log(city);
 
 });
-
-
-
-
-
 
 
 
