@@ -1,14 +1,9 @@
 // API information
 const apiKey = "1d0e728c8ec9d18a5f99aaa0096cbec3";
 var geocoder = "http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit={limit}&appid={API key}"
-// var enterCity = $('enterCity');
-// hard code the city for testing. will change later
-// var searchBtn = $('searchBtn');
 var enterCity = "Boston"
 var userCity = $('#enterCity');
 var searchBtn = $('#searchBtn');
-// var cityName = $('.cityName');
-// var enterCity = $('.cityName')
 var cityDate = $('.cityDate');
 var icon = $('.icon');
 var cityWeather = $('.cityWeather');
@@ -16,9 +11,10 @@ var cityTemp = $('.cityTemp');
 var cityWind = $('.cityWind');
 var cityHumidity = $('.cityHumidity');
 var cityUVIndex = $('.cityUVIndex');
+var cityUVIndexEl = document.querySelector('.cityUVIndex');
 var fiveDayForecast = $('#fiveDayForecast');
 var dateTrackerElement = $('#currentDay');
-// https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
+var citySearchHistoryArray = [];
 
 // Function to make the search button search for a city to call from the API
 searchBtn.on("click", function () {
@@ -34,12 +30,14 @@ searchBtn.on("click", function () {
         var humidity = data.main.humidity;
         // var UVIndex = data. //use the lat and lon to find the UVIndex
 
+        // Defining the text of all components
         $('.cityName').text(userCity.val());
         $('.icon').attr('src', icon);
         $('.cityWeather').text(weather);
         $('.cityTemp').text("Temperature: " + temp + " °F");
         $('.cityWind').text("Wind Speed: " + windSpeed + " MPH");
         $('.cityHumidity').text("Humidity: " + humidity + "%");
+        // cityUVIndexEl.text("UV Index: " + )
 
         var latitude = data.coord.lat;
         var longitude = data.coord.lon;
@@ -57,41 +55,81 @@ function timeTracker() {
 setInterval(timeTracker, 1000);
 
 
-// Conditional statements for the UVIndex color coding
-while (cityUVIndex.classList.length > 0) {
-    cityUVIndex.classList.remove(cityUVIndex.classList.item(0));
-
-    if (data.current.uvi > 5) {
-        cityUVIndex.classList.add("severe");
-    } else if (data.current.uvi > 3) {
-        cityUVIndex.classList.add("moderate");
-    } else {
-        cityUVIndex.classList.add("favorable");
-    }
-}
-
-
-// Function for reverse geocode to use lat + lon to get the uv index
-
-
 // Function to cycle through each of the days in the 5 day forecast
 function get5Day(latitude, longitude) {
     // fiveDayForecast.innerHTML = "";
+    // weather5DayCards.empty();
     var call = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&exclude=" + "current,minutely,hourly,alerts" + "&units=imperial&appid=" + apiKey
     $.getJSON(call, function (data) {
-        for (let index = 0; index < 5; index++) {
+        // Giving each component across 5 day forecast a value
+        for (let i = 0; i < 5; i++) {
+            unixDate = data.daily[i + 1].dt * 1000;
+            weatherDate = moment(unixDate).format('MMM D, YYYY');
             var newDivs = $('<div class="weatherCards"></div>')
-            var name = $('<h3 class="name"></h3>') //.text 
-            var temp = $('<h3 class="temp"></h3>').text(data.daily[i].temp.day);
-            var wind = $('<h3 class="wind"></h3>')
-            var forecast = $('<h3 class="forecast"></h3>')
-            var humidity = $('<h3 class="humidity"></h3>')
-            var uvi = $('<h3 class="uvi"></h3>')
+            var date = $('<h3 class="date lead"></h3>').text(weatherDate);
+            // var icon5Day = $('<img class="icon5Day"> src=""http://openweathermap.org/img/w/" + data.weather[0].icon + ".png""');
+            var icon5Day = $('<img class="icon5Day">').text(data.daily[i].weather.icon)
+            var temp = $('<h3 class="temp lead"></h3>').text("Temp: " + data.daily[i].temp.day + " °F");
+            var wind = $('<h3 class="wind lead"></h3>').text("Wind Speed: " + data.daily[i].wind_speed + " MPH");
+            // var forecast = $('<h3 class="forecast lead"></h3>').text(data.daily[i].weather.description);
+            var humidity = $('<h3 class="humidity lead"></h3>').text("Humidity: " + data.daily[i].humidity + "%");
+            var uvi = $('<h3 class="uvi lead"></h3>').text("UV Index: " + data.daily[i].uvi);
 
+            // Conditional statements for the UVIndex color coding
+
+            // while (cityUVIndexEl.classList.length > 0) {
+            //     cityUVIndexEl.classList.remove(cityUVIndexEl.classList.item(0));
+
+            //     if (data.current.uvi > 5) {
+            //         cityUVIndexEl.classList.add("severe");
+            //     } else if (data.current.uvi > 3) {
+            //         cityUVIndexEl.classList.add("moderate");
+            //     } else {
+            //         cityUVIndexEl.classList.add("favorable");
+            //     }
+            // }
+            // Appending each component to the div so that it shows
+            newDivs.append(date);
+            newDivs.append(icon5Day);
+            // newDivs.append(forecast);
+            newDivs.append(temp);
+            newDivs.append(wind);
+            newDivs.append(humidity);
+            newDivs.append(uvi);
+            fiveDayForecast.append(newDivs);
         }
         console.log(data)
     })
 };
+
+// Made the structure to show the search history, but I didn't go through with it.
+// Function to put the cities into an array and display them on the page.
+function cityHistory() {
+    let cityAlreadyHere = false;
+    // check to see if the city is already in the array and if it is then it wont be added to array. Search still on.
+    for (let i = 0; i < citySearchHistoryArray.length; i++) {
+        if (citySearchHistoryArray[i] == cityName) {
+            cityAlreadyHere = true;
+        }
+
+    }
+    //checks if city is already in the array, and add it if not then it puts it there
+    if (cityAlreadyHere == false) {
+        if (citySearchHistoryArray != null) {
+            if (citySearchHistoryArray.length === 5) {
+                citySearchHistoryArray.unshift(cityName);
+                citySearchHistoryArray.pop();
+            }
+            else {
+                citySearchHistoryArray.unshift(cityName);
+            }
+            //reset the local storage for the citySearchHistoryArray
+            localStorage.setItem('locationSearchHistoryArray', JSON.stringify(citySearchHistoryArray));
+        }
+        buildWeatherCards(cityName);
+    }
+
+}
 
 
 // Function to append the searched cities to the search bar on the left
@@ -109,76 +147,12 @@ function getHistory() {
     });
 }
 
+// makes the historical buttons into clickable search buttons if I had added them
 getHistory();
 $(document).on('click', '.historyButton', function (e) {
     citySearch(e.target.textContent);
 })
 
-
-
-
-
-// let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + selectedCity + "&units=imperial&APPID=" + apiKey;
-
-
-
-
-
-// Trying to figure out how to call the function using fetch instead of the $.getJSON method since we're learning about fetch in class
-function oneCallURL(lat, lon) {
-    var oneCallURL = "https://api.openweathermap.org/data/2.5/weather?q=" + enterCity + "&units=imperial&APPID=" + apiKey;
-    fetch(oneCallURL)
-        .then(function (res) {
-            return res.json()
-        })
-        .then(function (data) {
-            temp.textContent = data.current.temp
-        })
-}
-
-
-let allCities = [
-    {
-        name: 'Charlotte'
-    },
-    {
-        name: 'Rockford'
-    },
-    {
-        name: 'New York'
-    }
-]
-$("#enterCity").click(function (event) {
-
-    const searchString = event.target.value.toLowerCase();
-    const filteredResults = allCities.filter((city) => {
-        city.name.toLowerCase().includes(searchString);
-
-    })
-    console.log(event.target.value);
-    event.preventDefault();
-    var enterCity = $('#enterCity').val();
-    console.log(enterCity);
-
-
-});
-
-
-
-
-
-
-// var enterCity = enterCity.val();
-// console.log(enterCity);
-
-
-// Function to make the submit button clickable.
-// const fetchLocation = () => {
-//     if(enterCity !== ""){
-//         queryURL = "";
-//         console.log(queryURL);
-//     }
-// }
 
 // searchLocation function is for calling the city entered from the API, and handling if the entered city is invalid
 const searchLocation = (event) => {
@@ -194,44 +168,3 @@ const searchLocation = (event) => {
     enterCity.val("");
 }
 $('#searchBtn').on('submit', searchLocation);
-
-// Peter and I working on function to display weather, but not using it because I havent adjusted the rest of the code to make it fit.
-
-// function displayWeather(data) {
-//     for (var i = 1; i < 6; i++) {
-//       const card = $("<div>");
-//       card.addClass("card");
-//       card.attr("style", "width: 18rem");
-
-//       const cardBody = $("<div>");
-//       cardBody.addClass("card-body");
-
-//       const date = $("<h5>");
-//       date.addClass("card-title");
-//       date.text(moment(data.daily[i].dt, "X").format("ddd, MMM Do"));
-
-//       const icon = $("<img>");
-//       icon.addClass("card-img-top");
-//       icon.attr("src",); // http://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png
-
-
-//       icon.attr("alt", data.daily[i].weather[0].description);
-
-//       cardBody.append(date, icon);
-
-//       const list = $("<ul>");
-//       list.addClass("list-group list-group-flush");
-
-//       const temp = $(<li>Temp: ${data.daily[i].temp.day} °F</li>);
-//       const wind = $(<li>Wind: ${data.daily[i].wind_speed} mph</li>);
-//       const humidity = $(<li>Humidity: ${data.daily[i].humidity} %</li>);
-//       temp.addClass("list-group-item");
-//       wind.addClass("list-group-item");
-//       humidity.addClass("list-group-item");
-
-//       list.append(temp, wind, humidity);
-
-//       card.append(cardBody, list);
-//       $(".weather-cards").append(card);
-//     }
-//   }

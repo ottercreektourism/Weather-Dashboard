@@ -45,3 +45,11 @@ body {
   .favorable { background: green; }
   .moderate { background: yellow; }
   .severe { background: red; }
+
+  #fiveDayForecast {
+    display: flex;
+    justify-content: space-around;
+  }
+  .weatherCards {
+    padding: 1.5em;
+  }
