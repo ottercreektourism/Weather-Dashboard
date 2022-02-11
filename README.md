@@ -4,6 +4,7 @@ Task:
 - The task was to create a weather dashboard using the Open Weather API.
 - The user should search for a city, and the weather for that location would pop up in a large card, including the name of the city, temperature, wind speed, UV Index, and an icon representing the current weather.
 - For the same city, the user would also see a five day forecast for their searched location.
+- Ideally the search history would be able to be saved into a button so that the user could easily click the city name to display the weather as long as they'd typed it before. This was not completed.
 
 
 What was done:
@@ -21,6 +22,7 @@ How to use:
 
 
 Screenshots of the working site are provided here:
+https://github.com/ottercreektourism/Weather-Dashboard/issues/1#issue-1133143787
 
 Here is the link to the deployed site:
 https://ottercreektourism.github.io/Weather-Dashboard/
